@@ -10,6 +10,7 @@ import com.example.demo.UserMapper.UserMapper;
 import com.example.demo.bo.EmployeeBo;
 import com.example.demo.dao.EmployeeDao;
 import com.example.demo.data.EmployeeData;
+import com.example.demo.util.Constants;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,7 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public EmployeeBo createEmployee(EmployeeBo empl) {
 		
-		log.info("Adding Employee data: {}",empl);
+		log.info(Constants.ADDING_EMPLOYEE);
 		EmployeeData edata = umapper.EmployeeBoToEmployee(empl);
 		edata = edao.save(edata);
 		return umapper.EmployeeToEmployeeBo(edata);
@@ -35,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public EmployeeBo getEmployeebyId(int empId) {
 		
-		log.info("Retrieving Employee data with id: {}", empId);
+		log.info(Constants.RETRIEVING_EMPLOYEE);
 		EmployeeData edata = edao.findById(empId).orElse(null);
 		
 		return umapper.EmployeeToEmployeeBo(edata);
@@ -44,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 	@Override
 	public List<EmployeeBo> getAllEmployee() {
 		
-		log.info("Retrieving All Employees Data");
+		log.info(Constants.RETRIEVING_EMPLOYEE);
 		
 		return edao.findAll().stream()
 				.map(umapper::EmployeeToEmployeeBo)
