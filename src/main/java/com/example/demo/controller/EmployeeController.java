@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,11 +18,14 @@ import com.example.demo.bo.EmployeeBo;
 import com.example.demo.data.EmployeeData;
 import com.example.demo.service.EmployeeServiceImpl;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("/api/employee")
 @Slf4j
+@Validated
 public class EmployeeController {
 	
 	@Autowired
@@ -49,14 +53,14 @@ public class EmployeeController {
 //	}
 	
 	@PostMapping("/create")
-	public ResponseEntity<?> addEmployeeDetails(@RequestBody EmployeeBo empl){
+	public ResponseEntity<?> addEmployeeDetails(@Valid @RequestBody EmployeeBo empl){
 		eserv.createEmployee(empl);
 		log.info("Request Resived to add Employee details");
 		return ResponseEntity.ok("Employee added sucessfully");
 	}
 	
 	@GetMapping("/retrieval/{id}")
-	public ResponseEntity<EmployeeBo> getById(@PathVariable("id") int id) {
+	public ResponseEntity<EmployeeBo> getById(@NotNull @PathVariable("id") int id) {
 		log.info("Request Resived to get Employee details with id: {}",id);
 		EmployeeBo ebo = eserv.getEmployeebyId(id);	
 		return ResponseEntity.ok(ebo);
