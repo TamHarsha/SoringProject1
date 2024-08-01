@@ -72,5 +72,11 @@ public class EmployeeController {
 		List<EmployeeBo> ebo = eserv.getAllEmployee();
 		return ResponseEntity.ok(ebo);
 	}
+	
+	  @GetMapping("/health")
+	    public ResponseEntity<String> healthCheck() {
+	        log.info("Health check requested");
+	        return ResponseEntity.ok("Service is up and running!");
+	    }
 
 }
