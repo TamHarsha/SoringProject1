@@ -44,6 +44,15 @@ dependencies {
     annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     testAnnotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
     testImplementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    
+    //Cucumber Dependency
+    testImplementation 'io.cucumber:cucumber-java:7.11.0'
+    testImplementation 'io.cucumber:cucumber-spring:7.11.0'
+    testImplementation 'io.cucumber:cucumber-junit:7.11.0'
+    
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.0' // For JUnit 4 runner
+    //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    //testRuntimeOnly  'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
 tasks.named('test') {

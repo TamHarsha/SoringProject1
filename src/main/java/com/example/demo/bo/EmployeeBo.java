@@ -1,11 +1,5 @@
 package com.example.demo.bo;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import com.example.demo.dao.EmployeeDao;
-import com.example.demo.data.EmployeeData;
-
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
