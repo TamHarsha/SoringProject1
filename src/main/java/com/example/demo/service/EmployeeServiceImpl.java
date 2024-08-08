@@ -11,6 +11,7 @@ import com.example.demo.bo.EmployeeBo;
 import com.example.demo.dao.EmployeeDao;
 import com.example.demo.data.EmployeeData;
 import com.example.demo.util.Constants;
+import com.example.demo.util.JaxBConverter;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,7 +31,13 @@ public class EmployeeServiceImpl implements EmployeeService{
 		log.info(Constants.ADDING_EMPLOYEE);
 		EmployeeData edata = umapper.EmployeeBoToEmployee(empl);
 		edata = edao.save(edata);
-		return umapper.EmployeeToEmployeeBo(edata);
+		EmployeeBo employeeBo = umapper.EmployeeToEmployeeBo(edata);
+		
+		//pojoToJson(employeeBo);
+		String json = pojoToJson(employeeBo);
+		jsonToPojo(json);
+		
+		return employeeBo;
 	}
 
 	@Override
@@ -38,8 +45,11 @@ public class EmployeeServiceImpl implements EmployeeService{
 		
 		log.info(Constants.RETRIEVING_EMPLOYEE);
 		EmployeeData edata = edao.findById(empId).orElse(null);
+		EmployeeBo employeeBo = umapper.EmployeeToEmployeeBo(edata);
 		
-		return umapper.EmployeeToEmployeeBo(edata);
+		String json = pojoToJson(employeeBo);
+		jsonToPojo(json);
+		return employeeBo;
 	}
 
 	@Override
@@ -50,6 +60,30 @@ public class EmployeeServiceImpl implements EmployeeService{
 		return edao.findAll().stream()
 				.map(umapper::EmployeeToEmployeeBo)
 				.collect(Collectors.toList());
+	}
+	
+	//Pojo to Json Converting Method
+	public String pojoToJson(EmployeeBo eBo) {
+		try {
+			String json =  JaxBConverter.convertPojoToJson(eBo);
+			log.info("Converting Pojo Object to Json form: "+json);
+			return json;
+		}
+		catch(Exception e) {
+			log.info("Error Converting pojo to Json"+e);
+			return null;
+		}
+	}
+		
+	//Json to Pojo Converting Method
+	public void jsonToPojo(String json) {
+		try {
+			EmployeeBo e = JaxBConverter.convertJsonToPojo(json, EmployeeBo.class);
+			log.info("Converting Json to Pojo Object form: "+e);
+		}
+		catch(Exception e) {
+			log.info("Error Converting pojo to Json"+e);
+		}
 	}
 
 //	@Override
