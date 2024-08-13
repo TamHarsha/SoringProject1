@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.data.EmployeeData;
 
 @Component
-public class EmployeeH2Writer implements ItemWriter<EmployeeData> {
+public class EmployeeH2toCSVWriter implements ItemWriter<EmployeeData> {
 	private static final String fileheader = "ID,Name,EmailId,Address,PhoneNumber";
 	private static final String filename = "src/main/resources/h2tocsv.csv";
 

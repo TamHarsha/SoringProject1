@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import com.example.demo.data.EmployeeData;
 
 @Component
-public class EmployeeH2Processor implements ItemProcessor<EmployeeData, EmployeeData> {
+public class EmployeeProcessor implements ItemProcessor<EmployeeData, EmployeeData> {
 
 	@Override
 	public EmployeeData process(EmployeeData employee){

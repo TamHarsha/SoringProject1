@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,12 @@ public class EmployeeController {
 	private JobLauncher jobLauncher;
 	
 	@Autowired
+	@Qualifier("h2tocsvJob")
 	private Job employeeFromH2toCSV;
+	
+	@Autowired
+	@Qualifier("csvtoh2Job")
+	private Job employeeFromCSVtooH2;
 	
 	@PostMapping("/create")
 	public ResponseEntity<?> addEmployeeDetails(@Valid @RequestBody EmployeeBo empl){
@@ -76,7 +82,18 @@ public class EmployeeController {
 		
 		return ResponseEntity.ok("Data from H2 to Csv is Done.");
 	}
-	  
+	 
+    @GetMapping("/startCsvtoh2Job")
+    public BatchStatus startCsvToH2Job() throws Exception {
+        JobParameters jobParameters = new JobParametersBuilder()
+                .addLong("time", System.currentTimeMillis())
+                .toJobParameters();
+
+       
+        JobExecution jobExecution = jobLauncher.run(employeeFromCSVtooH2, jobParameters);
+       
+        return jobExecution.getStatus();
+    }
 	  
 
 	  

@@ -10,7 +10,7 @@ import com.example.demo.dao.EmployeeDao;
 import com.example.demo.data.EmployeeData;
 
 @Component
-public class EmployeeH2Reader implements ItemReader<EmployeeData> {
+public class EmployeeH2toCSVReader implements ItemReader<EmployeeData> {
 
 	@Autowired
 	private EmployeeDao employeeDao;
