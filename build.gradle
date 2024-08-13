@@ -36,7 +36,6 @@ dependencies {
 	
 	//Mock Test
 	testImplementation 'org.mockito:mockito-core:4.8.1'
-   // testImplementation 'org.mockito:mockito-junit-jupiter:4.0.0'
 	//testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 	
 	//mapstruct Dependency 
@@ -50,15 +49,23 @@ dependencies {
     testImplementation 'io.cucumber:cucumber-spring:7.11.0'
     testImplementation 'io.cucumber:cucumber-junit:7.11.0'
     
-    testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.0' // For JUnit 4 runner
-    //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    //testRuntimeOnly  'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.junit.vintage:junit-vintage-engine:5.10.0'
     
-        //JAXB Dependency
+    //JAXB Dependency
     implementation 'org.glassfish.jaxb:jaxb-runtime:3.0.2'
     
     //JackSon Depedency
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+    
+    //Spring Batch Dependency
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.springframework.batch:spring-batch-core'
+    testImplementation 'org.springframework.batch:spring-batch-test'
+    
+    
+    //Dependency for CSV file Handling
+    implementation 'org.apache.commons:commons-csv:1.11.0'
+
 }
 
 tasks.named('test') {
