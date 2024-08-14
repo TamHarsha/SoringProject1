@@ -22,8 +22,12 @@ public class EmployeeH2toCSVWriter implements ItemWriter<EmployeeData> {
 	@Override
 	public void write(Chunk<? extends EmployeeData> chunk) throws Exception {
 		// TODO Auto-generated method stub
+//		java.io.File file = new java.io.File(filename);
+//		if (!file.exists()) {
+//		    file.createNewFile();  // This will create a new empty file
+//		}
 		
-		try(FileWriter writer = new FileWriter(filename, true)){
+		try(FileWriter writer = new FileWriter(filename)){
 			
 			 if (new java.io.File(filename).length() == 0) {
 	                writer.write(fileheader + "\n");

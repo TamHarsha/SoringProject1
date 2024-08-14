@@ -29,7 +29,7 @@ public class converterh2ToCSV {
 	@Qualifier("h2tocsvStep")
 	Step employeeFromH2toCSVStrp(JobRepository jobRepository, PlatformTransactionManager transactionManager ,EmployeeH2toCSVReader reader, EmployeeProcessor processor, EmployeeH2toCSVWriter writer) {
 		
-		return new StepBuilder("H2ToCsvStep", jobRepository).<EmployeeData, EmployeeData>chunk(10,transactionManager)
+		return new StepBuilder("H2ToCsvStep", jobRepository).<EmployeeData, EmployeeData>chunk(5,transactionManager)
 				.reader(reader)
 				.processor(processor)
 				.writer(writer)

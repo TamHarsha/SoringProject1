@@ -45,6 +45,10 @@ public class EmployeeController {
 	@Qualifier("csvtoh2Job")
 	private Job employeeFromCSVtooH2;
 	
+	@Autowired
+	@Qualifier("tasklet")
+	private Job taskletJob;
+	
 	@PostMapping("/create")
 	public ResponseEntity<?> addEmployeeDetails(@Valid @RequestBody EmployeeBo empl){
 		eserv.createEmployee(empl);
@@ -94,7 +98,21 @@ public class EmployeeController {
        
         return jobExecution.getStatus();
     }
-	  
+    
+    @GetMapping("/tasklet")
+    public ResponseEntity<String> startBatchJob() {
+        try {
+            JobParameters jobParameters = new JobParametersBuilder()
+                    .addLong("startAt", System.currentTimeMillis())
+                    .toJobParameters();
+            
+            jobLauncher.run(taskletJob, jobParameters);
+            return ResponseEntity.ok("Batch job has been started successfully.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to start batch job: " + e.getMessage());
+        }
+    
+    }
 
 	  
 //		@PostMapping("/create")
