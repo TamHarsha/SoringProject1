@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import java.util.Optional;
+//import java.util.Optional;
 
 import org.springframework.batch.core.*;
 import org.springframework.batch.core.launch.JobLauncher;
@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.bo.EmployeeBo;
-import com.example.demo.data.EmployeeData;
+//import com.example.demo.data.EmployeeData;
 import com.example.demo.service.EmployeeServiceImpl;
 
+import io.swagger.v3.oas.annotations.Operation;
+//import io.swagger.v3.oas.annotations.responses.*;
+//import io.swagger.v3.oas.annotations.media.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +53,7 @@ public class EmployeeController {
 	private Job taskletJob;
 	
 	@PostMapping("/create")
+	@Operation(summary = "Create a new employee", description = "Add a new employee to the system")
 	public ResponseEntity<?> addEmployeeDetails(@Valid @RequestBody EmployeeBo empl){
 		eserv.createEmployee(empl);
 		log.info("Request Resived to add Employee details");
@@ -57,6 +61,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/retrieval/{id}")
+	@Operation(summary = "Get an employee by ID", description = "Fetch a specific employee using their ID")
 	public ResponseEntity<EmployeeBo> getById(@NotNull @PathVariable("id") int id) {
 		log.info("Request Resived to get Employee details with id: {}",id);
 		EmployeeBo ebo = eserv.getEmployeebyId(id);	
@@ -64,6 +69,7 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/all")
+	@Operation(summary = "Get All Employees", description = "Retrieve a list of all employees")
 	public ResponseEntity<List<EmployeeBo>> getAllEmployee(){
 		log.info("Request Resived to get all Employee details");
 		List<EmployeeBo> ebo = eserv.getAllEmployee();
@@ -71,12 +77,14 @@ public class EmployeeController {
 	}
 	
 	@GetMapping("/health")
+	@Operation(summary = "Health Check", description = "Checking the health of Backend")
 	public ResponseEntity<String> healthCheck() {
 	    log.info("Health check requested");
 	    return ResponseEntity.ok("Service is up and running!");
 	}
 	
 	@GetMapping("/h2tocsv")
+	@Operation(summary = "Get Data from H2 to Csv", description = "Convert the Data present in H2 to CSV file")
 	public ResponseEntity<?> employeeH2toCSV() throws Exception{
 		
 		JobParameters jobParameters = new JobParametersBuilder()
@@ -88,6 +96,7 @@ public class EmployeeController {
 	}
 	 
     @GetMapping("/startCsvtoh2Job")
+    @Operation(summary = "Data from Csv to H2", description = "Read the data from CSV file to H2 Database")
     public BatchStatus startCsvToH2Job() throws Exception {
         JobParameters jobParameters = new JobParametersBuilder()
                 .addLong("time", System.currentTimeMillis())
@@ -100,6 +109,7 @@ public class EmployeeController {
     }
     
     @GetMapping("/tasklet")
+    @Operation(summary = "Spring Batch job with tasklet", description = "Convert the Data present in H2 to CSV file using Tasklet")
     public ResponseEntity<String> startBatchJob() {
         try {
             JobParameters jobParameters = new JobParametersBuilder()
